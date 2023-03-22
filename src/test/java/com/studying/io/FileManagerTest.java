@@ -257,7 +257,10 @@ public class FileManagerTest {
     }
 
     private boolean compareFilesByNameAndLength(File fileFirst, File fileSecond) {
-        return fileFirst.length() == fileSecond.length() && fileFirst.getName().equalsIgnoreCase(fileSecond.getName());
+        if (!fileFirst.getName().equals(fileSecond.getName())) {
+            return false;
+        }
+        return fileFirst.length() == fileSecond.length();
     }
 
     private void recursiveDelete(File file) {
