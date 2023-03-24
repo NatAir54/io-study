@@ -19,10 +19,30 @@ public class FileAnalyzerTest {
         assertEquals(listExpected, resultList);
     }
 
-    @DisplayName("test filter sentences with exact word")
+    @DisplayName("test filter sentences with word")
     @Test
     void testFilter() {
-        String content = "Duck! One more duck. How many ducks here? Two ducks. Duck is beautiful.";
+        String content = "Hello! Wow, duck! One more duck. How many birds are here? Two birds. This duck is beautiful.";
+        List<String> listExpected = List.of("Wow, duck!", "One more duck.", "This duck is beautiful.");
+        List<String> splitSentences = FileAnalyzer.splitIntoSentences(content);
+        List<String> resultList = FileAnalyzer.filter(splitSentences, "duck");
+        assertEquals(listExpected, resultList);
+    }
+
+    @DisplayName("test filter sentences with word in different case")
+    @Test
+    void testFilterSentencesWithWordInDifferentCase() {
+        String content = "Hello! Duck! One more duck. How many birds are here? Two birds. Duck is beautiful.";
+        List<String> listExpected = List.of("Duck!", "One more duck.", "Duck is beautiful.");
+        List<String> splitSentences = FileAnalyzer.splitIntoSentences(content);
+        List<String> resultList = FileAnalyzer.filter(splitSentences, "duck");
+        assertEquals(listExpected, resultList);
+    }
+
+    @DisplayName("test filter sentences with word in different case including word in plural")
+    @Test
+    void testFilterSentencesWithWordInDifferentCaseIncludingWordInPlural() {
+        String content = "Hello! Duck! One more duck. How many ducks here? Two ducks. Duck is beautiful.";
         List<String> listExpected = List.of("Duck!", "One more duck.", "Duck is beautiful.");
         List<String> splitSentences = FileAnalyzer.splitIntoSentences(content);
         List<String> resultList = FileAnalyzer.filter(splitSentences, "duck");
