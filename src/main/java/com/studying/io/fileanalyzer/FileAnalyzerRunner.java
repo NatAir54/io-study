@@ -45,7 +45,7 @@ public class FileAnalyzerRunner {
                 "Duck only needs enough water for cleaning out their nostrils by dunking their heads, so a bowl will do. " +
                 "Ducks are friendly, curious little creatures, and each one comes with its own unique personality. " +
                 "Domestic duck is great in the garden and enjoyable to have in the yard. " +
-                "They are also great around children because their bites don't typically hurt. " +
+                "They are also great around children because their bites don't typically hurt! " +
                 "Duck does need to be protected from common predators such as hawks or the neighbor's pet dog, and any standard chicken tractor or pen to lock them up at night will do. " +
                 "Some breeds of domestic duck are raised purely for show. These show ducks display beautiful crests, striking plumage, and decorative tufts. " +
                 "Buff Orpington, Silver Appleyard, Rouen, Saxony, and Faun Runners are amongst my favorite show birds. " +
@@ -57,7 +57,7 @@ public class FileAnalyzerRunner {
                 "The domestic duck is farmed for a variety of reasons, including down, meat, eggs, oil, pets foie gras, and even their blood! " +
                 "In the Western Hemisphere, domestic duck farming is not as popular as chicken farming because chickens are easier to keep confined and produce more meat per bird. " +
                 "The overall lower cost of care makes chickens more desirable. " +
-                "With the exception of the Muscovy duck, most domestic ducks are horrible egg sitters. " +
+                "With the exception of the Muscovy duck, most domestic ducks are horrible egg sitters! " +
                 "Duck does not usually sit on their eggs, so its eggs must be incubated in order to hatch. " +
                 "This factor, again, raises the costs of duck farming. Overall, ducks are healthier for you to consume. " +
                 "The eggs are typically 30% bigger than chicken eggs, and duck eggs provide more of the essential vitamins and minerals your body needs. " +

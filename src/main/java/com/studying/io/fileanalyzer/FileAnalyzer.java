@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 public class FileAnalyzer {
     String pathToFile;
+    private static final Pattern SENTENCE_PATTERN = Pattern.compile("(?<=[.!?])");
+
 
     public FileAnalyzer(String pathToFile) {
         this.pathToFile = pathToFile;
@@ -24,7 +26,7 @@ public class FileAnalyzer {
         return new FileStatistics(filteredSentences, count);
     }
 
-    private String readContent(String path) throws IOException {
+    private static String readContent(String path) throws IOException {
         File pathToFile = new File(path);
         byte[] contentArray;
         try (InputStream inputStream = new FileInputStream(pathToFile)) {
@@ -35,13 +37,17 @@ public class FileAnalyzer {
         return new String(contentArray);
     }
 
-    private List<String> splitIntoSentences(String content) {
-        String[] sentences = content.split("(?<=[.!?])");
-        return new ArrayList<>(Arrays.asList(sentences));
+    static List<String> splitIntoSentences(String content) {
+        String[] sentences = SENTENCE_PATTERN.split(content);
+        List<String> list = new ArrayList<>();
+        for (String sentence : sentences) {
+            list.add(sentence.trim());
+        }
+        return list;
     }
 
 
-    private List<String> filter(List<String> sentences, String word) {
+    static List<String> filter(List<String> sentences, String word) {
         List<String> filteredList = new ArrayList<>();
         String regex = "\\b" + word + "\\b";
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
@@ -56,7 +62,7 @@ public class FileAnalyzer {
     }
 
 
-    private int countWord(List<String> filteredSentences, String word) {
+    static int countWord(List<String> filteredSentences, String word) {
         int counter = 0;
         String regex = "\\b" + word + "\\b";
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
