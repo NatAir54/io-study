@@ -2,7 +2,6 @@ package com.studying.io.fileanalyzer;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +25,7 @@ public class FileAnalyzer {
         return new FileStatistics(filteredSentences, count);
     }
 
-    private static String readContent(String path) throws IOException {
+    static String readContent(String path) throws IOException {
         File pathToFile = new File(path);
         byte[] contentArray;
         try (InputStream inputStream = new FileInputStream(pathToFile)) {

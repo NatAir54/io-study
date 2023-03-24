@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 public class FileAnalyzerRunner {
-    private static final String FILE_NAME = "src/test/resources/DuckBook.txt";
+    static final String FILE_NAME = "src/test/resources/DuckBook.txt";
 
     public static void main(String[] args) throws IOException {
         writeDuckBook(FILE_NAME);
@@ -24,11 +24,11 @@ public class FileAnalyzerRunner {
     }
 
     private static void printWordCount(int count) {
-        System.out.println("Found number of word occurrences: " + count);
+        System.out.println(count);
     }
 
 
-    private static void writeDuckBook(String path) throws IOException {
+    static void writeDuckBook(String path) throws IOException {
         String text = "What Is a Domestic Duck? Domestic duck is a duck that is cared for and/or raised by people. " +
                 "People raise ducks for many reasons, but the common ones are pets, eggs, meat, and show. " +
                 "Because duck is so reliant on humans, it don't last long in the wild on its own it relies on people for food and shelter. " +
