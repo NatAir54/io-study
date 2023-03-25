@@ -10,13 +10,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileAnalyzerTest {
 
-    @DisplayName("test splitIntoSentences with separators (.!&)")
+    @DisplayName("test split String into sentences with separators (.!&)")
     @Test
-    void testSplitIntoSentences() {
+    void testSplitStringIntoSentences() {
         String content = "Duck! One more duck. How many ducks here? Two ducks. Duck is beautiful.";
         List<String> listExpected = List.of("Duck!", "One more duck.", "How many ducks here?", "Two ducks.", "Duck is beautiful.");
         List<String> resultList = FileAnalyzer.splitIntoSentences(content);
         assertEquals(listExpected, resultList);
+    }
+
+    @DisplayName("test split file text into sentences with separators (.!&)")
+    @Test
+    void testSplitFileTextIntoSentences() throws IOException {
+        FileAnalyzerRunner.writeDuckBook(FileAnalyzerRunner.FILE_NAME);
+        String content = FileAnalyzer.readContent(FileAnalyzerRunner.FILE_NAME);
+        List<String> splitSentences = FileAnalyzer.splitIntoSentences(content);
+        assertEquals(43, splitSentences.size());
     }
 
     @DisplayName("test filter sentences with word")
@@ -49,6 +58,16 @@ public class FileAnalyzerTest {
         assertEquals(listExpected, resultList);
     }
 
+    @DisplayName("test filter sentences with word in file")
+    @Test
+    void testFilterSentencesWithWordInFile() throws IOException {
+        FileAnalyzerRunner.writeDuckBook(FileAnalyzerRunner.FILE_NAME);
+        String content = FileAnalyzer.readContent(FileAnalyzerRunner.FILE_NAME);
+        List<String> splitSentences = FileAnalyzer.splitIntoSentences(content);
+        List<String> filteredSentences = FileAnalyzer.filter(splitSentences, "duck");
+        assertEquals(23, filteredSentences.size());
+    }
+
     @DisplayName("test countWord")
     @Test
     void testCountWord() {
@@ -67,5 +86,4 @@ public class FileAnalyzerTest {
         List<String> filteredSentences = FileAnalyzer.filter(splitSentences, "duck");
         assertEquals(25, FileAnalyzer.countWord(filteredSentences, "duck"));
     }
-
 }
