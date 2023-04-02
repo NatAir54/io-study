@@ -1,6 +1,5 @@
 package com.studying.io.fileanalyzer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -11,9 +10,9 @@ public class StreamFileAnalyzer extends AbstractFileAnalyzer {
     @Override
     public List<String> splitIntoSentences(String content) {
         String[] sentences = SENTENCE_PATTERN.split(content);
-        List<String> list = new ArrayList<>();
-        Stream<String> sentencesStream = Stream.of(sentences);
-        sentencesStream.forEach(s -> list.add(s.trim()));
+        List<String> list = Stream.of(sentences)
+                .map(String::trim)
+                .collect(Collectors.toList());
         return list;
     }
 
