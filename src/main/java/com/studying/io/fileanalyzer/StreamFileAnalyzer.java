@@ -3,6 +3,7 @@ package com.studying.io.fileanalyzer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamFileAnalyzer extends AbstractFileAnalyzer {
@@ -20,14 +21,11 @@ public class StreamFileAnalyzer extends AbstractFileAnalyzer {
     public List<String> filter(List<String> sentences, String word) {
         String regex = "\\b%s\\b".formatted(word);
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        List<String> filteredList = new ArrayList<>();
-        sentences.stream()
-                .forEach(s -> {
+        List<String> filteredList = sentences.stream()
+                .filter(s -> {
                     matcher = pattern.matcher(s);
-                    if (matcher.find()) {
-                        filteredList.add(s);
-                    }
-                });
+                    return matcher.find();
+                }).collect(Collectors.toList());
         return filteredList;
     }
 
