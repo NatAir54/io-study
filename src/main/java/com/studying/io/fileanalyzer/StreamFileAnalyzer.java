@@ -33,7 +33,7 @@ public class StreamFileAnalyzer extends AbstractFileAnalyzer {
     public int countWord(List<String> filteredSentences, String word) {
         String regex = "\\b%s\\b".formatted(word);
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        filteredSentences.stream()
+        filteredSentences.parallelStream()
                 .forEach(s -> {
                     matcher = pattern.matcher(s);
                     while (matcher.find()) {
