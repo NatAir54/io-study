@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,5 +66,34 @@ public abstract class FileAnalyzerTest {
         List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
         List<String> filteredSentences = fileAnalyzer.filter(splitSentences, "duck");
         assertEquals(3, fileAnalyzer.countWord(filteredSentences, "duck"));
+    }
+
+    @DisplayName("test split file text into sentences with separators (.!&)")
+    @Test
+    void testSplitFileTextIntoSentences() throws IOException {
+     //   writeDuckBook(FILE_NAME);
+        String content = fileAnalyzer.readContent("src/test/resources/DuckBook.txt");
+        List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
+        assertEquals(43, splitSentences.size());
+    }
+
+    @DisplayName("test filter sentences with word in file")
+    @Test
+    void testFilterSentencesWithWordInFile() throws IOException {
+    //    writeDuckBook(FILE_NAME);
+        String content = fileAnalyzer.readContent("src/test/resources/DuckBook.txt");
+        List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
+        List<String> filteredSentences = fileAnalyzer.filter(splitSentences, "duck");
+        assertEquals(23, filteredSentences.size());
+    }
+
+    @DisplayName("test count word in file")
+    @Test
+    void testCountWordInFile() throws IOException {
+     //   writeDuckBook(FILE_NAME);
+        String content = fileAnalyzer.readContent("src/test/resources/DuckBook.txt");
+        List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
+        List<String> filteredSentences = fileAnalyzer.filter(splitSentences, "duck");
+        assertEquals(25, fileAnalyzer.countWord(filteredSentences, "duck"));
     }
 }
