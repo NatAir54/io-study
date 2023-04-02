@@ -1,34 +1,64 @@
 package com.studying.io.fileanalyzer;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FileAnalyzerRunner {
-    static final String FILE_NAME = "src/test/resources/DuckBook.txt";
+public class FileAnalyzerIntegrationTest {
+    private static final String FILE_NAME = "src/test/resources/DuckBook.txt";
+    BasicFileAnalyzer fileAnalyzer = new BasicFileAnalyzer();
 
     public static void main(String[] args) throws IOException {
         writeDuckBook(FILE_NAME);
-        FileAnalyzer fileAnalyzer = new FileAnalyzer(FILE_NAME);
-        FileStatistics fileStatistics = fileAnalyzer.analyze("duck");
+        BasicFileAnalyzer fileAnalyzer = new BasicFileAnalyzer();
+        FileStatistics fileStatistics = fileAnalyzer.analyze(FILE_NAME,"duck");
 
         printSentencesWithWord(fileStatistics.getSentences());
         printWordCount(fileStatistics.getWordCount());
     }
 
+    @DisplayName("test split file text into sentences with separators (.!&)")
+    @Test
+    void testSplitFileTextIntoSentences() throws IOException {
+        writeDuckBook(FILE_NAME);
+        String content = fileAnalyzer.readContent(FILE_NAME);
+        List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
+        assertEquals(43, splitSentences.size());
+    }
+
+    @DisplayName("test filter sentences with word in file")
+    @Test
+    void testFilterSentencesWithWordInFile() throws IOException {
+        writeDuckBook(FILE_NAME);
+        String content = fileAnalyzer.readContent(FILE_NAME);
+        List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
+        List<String> filteredSentences = fileAnalyzer.filter(splitSentences, "duck");
+        assertEquals(23, filteredSentences.size());
+    }
+
+    @DisplayName("test count word in file")
+    @Test
+    void testCountWordInFile() throws IOException {
+        writeDuckBook(FILE_NAME);
+        String content = fileAnalyzer.readContent(FILE_NAME);
+        List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
+        List<String> filteredSentences = fileAnalyzer.filter(splitSentences, "duck");
+        assertEquals(25, fileAnalyzer.countWord(filteredSentences, "duck"));
+    }
+
     private static void printSentencesWithWord(List<String> filteredSentences) {
-        for (String sentence : filteredSentences) {
-            System.out.println(sentence);
-        }
+        filteredSentences.forEach(System.out :: println);
     }
 
     private static void printWordCount(int count) {
         System.out.println(count);
     }
 
-
-    static void writeDuckBook(String path) throws IOException {
+    private static void writeDuckBook(String path) throws IOException {
         String text = "What Is a Domestic Duck? " +
                 "Domestic duck is a duck that is cared for and/or raised by people. " +
                 "People raise ducks for many reasons, but the common ones are pets, eggs, meat, and show. " +
@@ -72,9 +102,9 @@ public class FileAnalyzerRunner {
                 "Raising a domestic duck is similar to raising any other type of poultry. " +
                 "Duck need to be brooded through their younger age and fed the same types of foods as chickens throughout the stages of their lives. " +
                 "Ducks are more resilient, but they also have the same health problems as other poultry.";
-        OutputStream outputStream = new FileOutputStream(path);
-        byte[] bytes = text.getBytes();
-        outputStream.write(bytes);
-        outputStream.close();
+        try (OutputStream outputStream = new FileOutputStream(path)) {
+            byte[] bytes = text.getBytes();
+            outputStream.write(bytes);
+        }
     }
 }
