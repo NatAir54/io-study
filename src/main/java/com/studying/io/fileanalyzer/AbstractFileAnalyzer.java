@@ -1,13 +1,10 @@
 package com.studying.io.fileanalyzer;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class AbstractFileAnalyzer implements FileAnalyzer {
+public abstract class AbstractFileAnalyzer implements FileAnalyzer {
     protected Matcher matcher;
     protected int counter = 0;
 
@@ -22,29 +19,14 @@ public class AbstractFileAnalyzer implements FileAnalyzer {
     }
 
     @Override
-    public String readContent(String path) throws IOException {
-        File pathToFile = new File(path);
-        byte[] contentArray;
-        try (InputStream inputStream = new FileInputStream(pathToFile)) {
-            int fileLength = (int) pathToFile.length();
-            contentArray = new byte[fileLength];
-            inputStream.read(contentArray);
-        }
-        return new String(contentArray);
-    }
+    public abstract String readContent(String path) throws IOException;
 
     @Override
-    public List<String> splitIntoSentences(String content) {
-        return null;
-    }
+    public abstract List<String> splitIntoSentences(String content);
 
     @Override
-    public List<String> filter(List<String> sentences, String word) {
-        return null;
-    }
+    public abstract List<String> filter(List<String> sentences, String word);
 
     @Override
-    public int countWord(List<String> filteredSentences, String word) {
-        return 0;
-    }
+    public abstract int countWord(List<String> filteredSentences, String word);
 }

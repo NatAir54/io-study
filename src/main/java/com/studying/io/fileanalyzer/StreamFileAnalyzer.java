@@ -1,11 +1,23 @@
 package com.studying.io.fileanalyzer;
 
+import java.io.*;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamFileAnalyzer extends AbstractFileAnalyzer {
+    @Override
+    public String readContent(String path) throws IOException {
+        File pathToFile = new File(path);
+        StringBuilder result = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pathToFile)))) {
+            while (br.ready()) {
+                result.append(br.readLine());
+            }
+        }
+        return result.toString();
+    }
 
     @Override
     public List<String> splitIntoSentences(String content) {
@@ -32,7 +44,7 @@ public class StreamFileAnalyzer extends AbstractFileAnalyzer {
     public int countWord(List<String> filteredSentences, String word) {
         String regex = "\\b%s\\b".formatted(word);
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        filteredSentences.parallelStream()
+        filteredSentences.stream()
                 .forEach(s -> {
                     matcher = pattern.matcher(s);
                     while (matcher.find()) {

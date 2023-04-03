@@ -71,7 +71,6 @@ public abstract class FileAnalyzerTest {
     @DisplayName("test split file text into sentences with separators (.!&)")
     @Test
     void testSplitFileTextIntoSentences() throws IOException {
-     //   writeDuckBook(FILE_NAME);
         String content = fileAnalyzer.readContent("src/test/resources/DuckBook.txt");
         List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
         assertEquals(43, splitSentences.size());
@@ -80,7 +79,6 @@ public abstract class FileAnalyzerTest {
     @DisplayName("test filter sentences with word in file")
     @Test
     void testFilterSentencesWithWordInFile() throws IOException {
-    //    writeDuckBook(FILE_NAME);
         String content = fileAnalyzer.readContent("src/test/resources/DuckBook.txt");
         List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
         List<String> filteredSentences = fileAnalyzer.filter(splitSentences, "duck");
@@ -90,7 +88,6 @@ public abstract class FileAnalyzerTest {
     @DisplayName("test count word in file")
     @Test
     void testCountWordInFile() throws IOException {
-     //   writeDuckBook(FILE_NAME);
         String content = fileAnalyzer.readContent("src/test/resources/DuckBook.txt");
         List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
         List<String> filteredSentences = fileAnalyzer.filter(splitSentences, "duck");

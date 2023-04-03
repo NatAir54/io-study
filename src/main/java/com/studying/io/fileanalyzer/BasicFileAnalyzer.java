@@ -1,10 +1,25 @@
 package com.studying.io.fileanalyzer;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public class BasicFileAnalyzer extends AbstractFileAnalyzer {
+    @Override
+    public String readContent(String path) throws IOException {
+        File pathToFile = new File(path);
+        byte[] contentArray;
+        try (InputStream inputStream = new FileInputStream(pathToFile)) {
+            int fileLength = (int) pathToFile.length();
+            contentArray = new byte[fileLength];
+            inputStream.read(contentArray);
+        }
+        return new String(contentArray);
+    }
 
     public List<String> splitIntoSentences(String content) {
         String[] sentences = SENTENCE_PATTERN.split(content);

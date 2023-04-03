@@ -1,12 +1,9 @@
 package com.studying.io.fileanalyzer;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileAnalyzerIntegrationTest {
     private static final String FILE_NAME = "src/test/resources/DuckBook.txt";
@@ -14,7 +11,7 @@ public class FileAnalyzerIntegrationTest {
 
     public static void main(String[] args) throws IOException {
         writeDuckBook(FILE_NAME);
-        BasicFileAnalyzer fileAnalyzer = new BasicFileAnalyzer();
+        FileAnalyzer fileAnalyzer = new StreamFileAnalyzer();
         FileStatistics fileStatistics = fileAnalyzer.analyze(FILE_NAME,"duck");
 
         printSentencesWithWord(fileStatistics.getSentences());
