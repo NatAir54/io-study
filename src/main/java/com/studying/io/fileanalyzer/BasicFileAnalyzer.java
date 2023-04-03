@@ -1,9 +1,6 @@
 package com.studying.io.fileanalyzer;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -12,13 +9,13 @@ public class BasicFileAnalyzer extends AbstractFileAnalyzer {
     @Override
     public String readContent(String path) throws IOException {
         File pathToFile = new File(path);
-        byte[] contentArray;
-        try (InputStream inputStream = new FileInputStream(pathToFile)) {
-            int fileLength = (int) pathToFile.length();
-            contentArray = new byte[fileLength];
-            inputStream.read(contentArray);
+        StringBuilder result = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pathToFile)))) {
+            while (br.ready()) {
+                result.append(br.readLine());
+            }
         }
-        return new String(contentArray);
+        return result.toString();
     }
 
     public List<String> splitIntoSentences(String content) {

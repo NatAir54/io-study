@@ -1,6 +1,7 @@
 package com.studying.io.fileanalyzer;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -9,12 +10,10 @@ import java.util.stream.Stream;
 public class StreamFileAnalyzer extends AbstractFileAnalyzer {
     @Override
     public String readContent(String path) throws IOException {
-        File pathToFile = new File(path);
+        File file = new File(path);
         StringBuilder result = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pathToFile)))) {
-            while (br.ready()) {
-                result.append(br.readLine());
-            }
+        try (Stream<String> linesStream = Files.lines(file.toPath())) {
+            linesStream.forEach(result::append);
         }
         return result.toString();
     }
