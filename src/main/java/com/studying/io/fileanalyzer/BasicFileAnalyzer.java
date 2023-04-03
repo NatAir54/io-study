@@ -43,6 +43,7 @@ public class BasicFileAnalyzer extends AbstractFileAnalyzer {
 
     public int countWord(List<String> filteredSentences, String word) {
         Pattern pattern = getPattern(word);
+        int counter = 0;
         for (String sentence : filteredSentences) {
             matcher = pattern.matcher(sentence);
             while (matcher.find()) {

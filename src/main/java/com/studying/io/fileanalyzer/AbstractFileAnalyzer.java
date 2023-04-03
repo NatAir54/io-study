@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractFileAnalyzer implements FileAnalyzer {
     protected Matcher matcher;
-    protected int counter = 0;
 
     @Override
     public FileStatistics analyze(String pathToFile, String word) throws IOException {

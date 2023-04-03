@@ -3,6 +3,8 @@ package com.studying.io.fileanalyzer;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,14 +42,19 @@ public class StreamFileAnalyzer extends AbstractFileAnalyzer {
 
     @Override
     public int countWord(List<String> filteredSentences, String word) {
+        Optional<Integer> result = filteredSentences.stream()
+                .map(s -> countWordInSentence(s, word))
+                .reduce(Integer::sum);
+        return result.orElse(0);
+    }
+
+    private static int countWordInSentence(String sentence, String word) {
         Pattern pattern = getPattern(word);
-        filteredSentences.stream()
-                .forEach(s -> {
-                    matcher = pattern.matcher(s);
-                    while (matcher.find()) {
-                        counter++;
-                    }
-                });
+        Matcher matcher = pattern.matcher(sentence);
+        int counter = 0;
+        while (matcher.find()) {
+              counter++;
+        }
         return counter;
     }
 }
