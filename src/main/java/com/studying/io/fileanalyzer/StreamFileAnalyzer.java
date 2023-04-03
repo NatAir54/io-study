@@ -29,8 +29,7 @@ public class StreamFileAnalyzer extends AbstractFileAnalyzer {
 
     @Override
     public List<String> filter(List<String> sentences, String word) {
-        String regex = "\\b%s\\b".formatted(word);
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = getPattern(word);
         List<String> filteredList = sentences.stream()
                 .filter(s -> {
                     matcher = pattern.matcher(s);
@@ -41,8 +40,7 @@ public class StreamFileAnalyzer extends AbstractFileAnalyzer {
 
     @Override
     public int countWord(List<String> filteredSentences, String word) {
-        String regex = "\\b%s\\b".formatted(word);
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = getPattern(word);
         filteredSentences.stream()
                 .forEach(s -> {
                     matcher = pattern.matcher(s);

@@ -29,8 +29,7 @@ public class BasicFileAnalyzer extends AbstractFileAnalyzer {
 
 
     public List<String> filter(List<String> sentences, String word) {
-        String regex = "\\b%s\\b".formatted(word);
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = getPattern(word);
         List<String> filteredList = new ArrayList<>();
         for (String sentence : sentences) {
             matcher = pattern.matcher(sentence);
@@ -43,8 +42,7 @@ public class BasicFileAnalyzer extends AbstractFileAnalyzer {
 
 
     public int countWord(List<String> filteredSentences, String word) {
-        String regex = "\\b%s\\b".formatted(word);
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = getPattern(word);
         for (String sentence : filteredSentences) {
             matcher = pattern.matcher(sentence);
             while (matcher.find()) {
