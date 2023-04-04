@@ -1,8 +1,6 @@
 package com.studying.io.fileanalyzer;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 
 public class FileAnalyzerIntegrationTest {
@@ -70,9 +68,9 @@ public class FileAnalyzerIntegrationTest {
                 "Raising a domestic duck is similar to raising any other type of poultry. " +
                 "Duck need to be brooded through their younger age and fed the same types of foods as chickens throughout the stages of their lives. " +
                 "Ducks are more resilient, but they also have the same health problems as other poultry.";
-        try (OutputStream outputStream = new FileOutputStream(path)) {
-            byte[] bytes = text.getBytes();
-            outputStream.write(bytes);
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path)))) {
+            bw.write(text);
+            bw.flush();
         }
     }
 }
