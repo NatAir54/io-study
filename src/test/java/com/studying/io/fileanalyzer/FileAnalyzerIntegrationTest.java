@@ -1,15 +1,46 @@
 package com.studying.io.fileanalyzer;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import java.io.*;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class FileAnalyzerIntegrationTest {
     private static final String FILE_NAME = "src/test/resources/DuckBook.txt";
+    private FileAnalyzer fileAnalyzer = new StreamFileAnalyzer();
 
+    @DisplayName("test split file text into sentences with separators (.!?) work fine")
+    @Test
+    void testSplitFileTextIntoSentencesWorkFine() throws IOException {
+        String content = fileAnalyzer.readContent(FILE_NAME);
+        List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
+        assertEquals(43, splitSentences.size());
+    }
 
-    public static void main(String[] args) throws IOException {
+    @DisplayName("test filter sentences with word in file work fine")
+    @Test
+    void testFilterSentencesWithWordInFileWorkFine() throws IOException {
+        String content = fileAnalyzer.readContent(FILE_NAME);
+        List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
+        List<String> filteredSentences = fileAnalyzer.filter(splitSentences, "duck");
+        assertEquals(23, filteredSentences.size());
+    }
+
+    @DisplayName("test count word in file work fine")
+    @Test
+    void testCountWordInFileWorkFine() throws IOException {
+        String content = fileAnalyzer.readContent(FILE_NAME);
+        List<String> splitSentences = fileAnalyzer.splitIntoSentences(content);
+        List<String> filteredSentences = fileAnalyzer.filter(splitSentences, "duck");
+        assertEquals(25, fileAnalyzer.countWord(filteredSentences, "duck"));
+    }
+
+    @Test
+    void testAnalyzeWorkFine() throws IOException {
         writeDuckBook(FILE_NAME);
-        FileAnalyzer fileAnalyzer = new StreamFileAnalyzer();
         FileStatistics fileStatistics = fileAnalyzer.analyze(FILE_NAME,"duck");
 
         printSentencesWithWord(fileStatistics.getSentences());
@@ -23,6 +54,8 @@ public class FileAnalyzerIntegrationTest {
     private static void printWordCount(int count) {
         System.out.println(count);
     }
+
+
 
     private static void writeDuckBook(String path) throws IOException {
         String text = "What Is a Domestic Duck? " +
